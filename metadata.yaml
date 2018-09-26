@@ -1,14 +1,10 @@
-name: ubuntu-lite
-summary: The smallest charm I could come up with that still looks nice.
-maintainer: John Arbash Meinel <john@arbash-meinel.com>
+name: no-ubuntu-user
+display-name: no-ubuntu-user
+summary: A charm that deploys Ubuntu and then removes the Ubuntu user.
+maintainer: John Arbash Meinel <john.meinel@canonical.com>
 description: |
-  Run an Ubuntu system, but don't do a whole lot else.
-series: ["xenial", "bionic", "trusty"]
-provides:
-  ubuntu:
-    interface: ubuntu
-extra-bindings:
-  another:
+  Run an Ubuntu system, without the 'ubuntu' user.
+series: ["bionic", "xenial"]
 tags:
   # https://jujucharms.com/docs/stable/authors-charm-metadata
   - misc

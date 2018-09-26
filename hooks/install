@@ -1,0 +1,12 @@
+#!/bin/bash
+set -ex
+status-set maintenance "removing the ubuntu user"
+# Make sure there aren't any systemd sort of processes running for the ubuntu
+# user, otherwise we cannot remove the user
+killall -u ubuntu
+if userdel -r ubuntu ; then
+    juju-log -l INFO "removed the ubuntu user"
+else
+    juju-log -l WARNING "ubuntu user could not be removed (already missing?)"
+fi
+

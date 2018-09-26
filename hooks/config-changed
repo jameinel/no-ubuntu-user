@@ -1,0 +1,25 @@
+#!/bin/bash
+username="$(config-get username)"
+if [ -z "$username" ] ; then
+    juju-log -l INFO "not creating a user as 'username' is not set"
+else
+    userdir=~{$username}
+    if [ -d ${userdir} ] ; then
+        juju-log -l INFO "user ${username} already exists, not creating again"
+    else
+        juju-log -l INFO "creating user: ${username}"
+        adduser --disabled-password --gecos "" ${username} 
+    fi
+    sshkey="$(config-get ssh-key)"
+    if [ -z "$sshkey" ] ; then 
+        juju-log -l INFO "'ssh-key' not set, not updating authorized_keys"
+    else
+        su - ${username} -c "umask 077; cd ; mkdir -p .ssh && echo "${sshkey}" >> .ssh/authorized_keys"
+    fi
+    sshimportid="$(config-get ssh-import-id)"
+    if [ -z "$sshimportid" ] ; then
+        juju-log -l INFO "'ssh-import-id' not set, not importing an ssh id"
+    else
+        su - ${username} -c "ssh-import-id ${sshimportid}"
+    fi
+fi

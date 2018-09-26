@@ -1,1 +1,20 @@
-options: {}
+options:
+  username:
+    type: string
+    default: ""
+    description: |
+      If supplied, a user will be created with the given username. If left
+      empty, no user will be created, only the ubuntu user will be removed.
+  ssh-key:
+    type: string
+    default: ""
+    description: |
+      If supplied along with "username", then this ssh-key will be added to
+      "~<username>/.ssh/authorized-keys"
+  ssh-import-id:
+    type: string
+    default: ""
+    description: |
+      If supplied along with "username", then "ssh-import-id ${ssh-import-id}"
+      will be run as the user to import their SSH keys from Launchpad or
+      Github.
